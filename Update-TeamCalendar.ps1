@@ -51,9 +51,14 @@ $outPath = "$($cfg.OutputPath)"
 if (-not $outPath) { $outPath = 'team.ics' }
 if (-not [IO.Path]::IsPathRooted($outPath)) { $outPath = Join-Path (Split-Path $ConfigPath -Parent) $outPath }
 
-$arenaAddresses = @{}
+# Arena details, either a plain address string or { Address, Lat, Lon, PlaceId }
+$arenaInfo = @{}
 if ($cfg.ArenaAddresses) {
-    foreach ($p in $cfg.ArenaAddresses.PSObject.Properties) { $arenaAddresses[$p.Name.ToLower()] = "$($p.Value)" }
+    foreach ($p in $cfg.ArenaAddresses.PSObject.Properties) {
+        $v = $p.Value
+        if ($v -is [string]) { $v = [pscustomobject]@{ Address = $v } }
+        $arenaInfo[$p.Name.Trim().ToLower()] = $v
+    }
 }
 
 # ---------- download ----------
@@ -325,6 +330,7 @@ $lines.Add('X-PUBLISHED-TTL:PT6H')
 
 $stamp = [DateTime]::UtcNow.ToString("yyyyMMdd'T'HHmmss'Z'")
 $seen = @{}
+$missingArenas = @{}
 
 foreach ($g in $games) {
     $isHome = $teamName -and ($g.Home -ieq $teamName)
@@ -347,17 +353,24 @@ foreach ($g in $games) {
             $summary += " ($res $us-$them)"
         }
     }
+    $location = $g.Arena
+    $arena = $null
+    if ($location) { $arena = $arenaInfo[$location.Trim().ToLower()] }
+    $mapUrl = ''
+    if ($arena -and $arena.Address) {
+        $location = "$($g.Arena), $($arena.Address)"
+        $mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + [Uri]::EscapeDataString($location)
+        if ($arena.PlaceId) { $mapUrl += '&query_place_id=' + $arena.PlaceId }
+        $desc += "`nArena: $location`nMap: $mapUrl"
+    } elseif ($location) {
+        $missingArenas[$location] = $true
+    }
     $desc += "`nSchedule: $($cfg.ScheduleUrl)"
 
     # UID uses the league GameID, or date and teams, so a time change updates the event instead of duplicating it
     $seed = if ($g.GameId) { 'game|' + $g.GameId } else { $g.Start.ToString('yyyyMMdd') + '|' + $g.Home + '|' + $g.Visitor }
     if ($seen.ContainsKey($seed)) { $seed += '|' + $g.Start.ToString('HHmm') }
     $seen[$seed] = $true
-
-    $location = $g.Arena
-    if ($location -and $arenaAddresses.ContainsKey($location.ToLower())) {
-        $location = "$location, $($arenaAddresses[$location.ToLower()])"
-    }
 
     $lines.Add('BEGIN:VEVENT')
     $lines.Add('UID:' + (Get-Uid $seed))
@@ -366,6 +379,17 @@ foreach ($g in $games) {
     $lines.Add('DTEND;TZID=America/Winnipeg:' + $end.ToString("yyyyMMdd'T'HHmmss"))
     Add-Line $lines ('SUMMARY:' + (Escape-Ics $summary))
     if ($location) { Add-Line $lines ('LOCATION:' + (Escape-Ics $location)) }
+    if ($arena -and $null -ne $arena.Lat -and $null -ne $arena.Lon) {
+        $inv = [Globalization.CultureInfo]::InvariantCulture
+        $lat = ([double]$arena.Lat).ToString('0.######', $inv)
+        $lon = ([double]$arena.Lon).ToString('0.######', $inv)
+        $lines.Add("GEO:$lat;$lon")
+        # Apple Calendar uses this for the map pin and travel time
+        $title = $g.Arena.Replace('"', "'")
+        $addr = "$($arena.Address)".Replace('"', "'")
+        Add-Line $lines "X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS=`"$addr`";X-APPLE-RADIUS=100;X-TITLE=`"$title`":geo:$lat,$lon"
+    }
+    if ($mapUrl) { Add-Line $lines ('URL:' + $mapUrl) }
     Add-Line $lines ('DESCRIPTION:' + (Escape-Ics $desc))
     foreach ($reminder in $reminders) {
         $lines.Add('BEGIN:VALARM')
@@ -377,6 +401,8 @@ foreach ($g in $games) {
     $lines.Add('END:VEVENT')
 }
 $lines.Add('END:VCALENDAR')
+
+foreach ($m in $missingArenas.Keys) { Write-Warning "No address in config.json for arena: $m" }
 
 $newText = ($lines -join "`r`n") + "`r`n"
 

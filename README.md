@@ -19,15 +19,24 @@ subscribe to with `webcal://`. Games update in your calendar when the league cha
 | OutputPath | Where the .ics is written |
 | GameLengthMinutes | Event length (60) |
 | ReminderMinutes | Alerts before each game, e.g. `[120, 60]`. `[]` for none |
-| ArenaAddresses | Optional map of arena name to street address, so maps links work |
+| ArenaAddresses | Arena name (as the league spells it) to address, map pin and Google place ID |
 
-Example:
+Arena entries can be a full object or just an address string:
 
 ```json
 "ArenaAddresses": {
-  "Sargent Park": "999 Sargent Ave, Winnipeg, MB"
+  "Bertrand": {
+    "Address": "294 Bertrand St, Winnipeg, MB R2H 0S4",
+    "Lat": 49.883868,
+    "Lon": -97.114604,
+    "PlaceId": "ChIJUcTYnjRx6lIRBTfMViiJ-8Q"
+  },
+  "Some New Rink": "123 Example St, Winnipeg, MB"
 }
 ```
+
+Each event gets the full address as its location, a map pin, and a Google Maps link.
+If a game is at an arena not in the list, the run log shows a warning naming it.
 
 ## Option A: GitHub (free, no PC needed)
 

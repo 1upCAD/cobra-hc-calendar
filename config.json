@@ -4,7 +4,148 @@
   "CalendarName": "",
   "OutputPath": "docs/team.ics",
   "GameLengthMinutes": 60,
-  "ReminderMinutes": [120, 60],
+  "ReminderMinutes": [
+    120,
+    60
+  ],
   "ArenaAddresses": {
+    "Ab McDonald Arena": {
+      "Address": "2055 Ness Ave, Winnipeg, MB R3J 0Z2",
+      "Lat": 49.886114,
+      "Lon": -97.234381,
+      "PlaceId": "ChIJFWl7BABz6lIR3tknpwBSoJY"
+    },
+    "Bertrand": {
+      "Address": "294 Bertrand St, Winnipeg, MB R2H 0S4",
+      "Lat": 49.8838677,
+      "Lon": -97.1146035,
+      "PlaceId": "ChIJUcTYnjRx6lIRBTfMViiJ-8Q"
+    },
+    "Century Arena": {
+      "Address": "1377 Clarence Ave, Winnipeg, MB R3T 1T4",
+      "Lat": 49.8315329,
+      "Lon": -97.1688353,
+      "PlaceId": "ChIJnSROs7F16lIR00-d8E3NOuk"
+    },
+    "Charlie Gardiner": {
+      "Address": "799 Logan Ave, Winnipeg, MB R3E 1N2",
+      "Lat": 49.9100875,
+      "Lon": -97.1577453,
+      "PlaceId": "ChIJE-bQlehz6lIR7Y3-3jKvApU"
+    },
+    "Dutton Arena": {
+      "Address": "400 South Dr, Winnipeg, MB R3T 0E3",
+      "Lat": 49.8437842,
+      "Lon": -97.1216941,
+      "PlaceId": "ChIJoSCGfYh26lIRwNtsgjh7I2E"
+    },
+    "East End 1": {
+      "Address": "517 Pandora Ave E, Winnipeg, MB R2C 0B6",
+      "Lat": 49.8944333,
+      "Lon": -96.9914138,
+      "PlaceId": "ChIJK1gr-tR76lIRWbHwSCpCBBA"
+    },
+    "East End 2": {
+      "Address": "517 Pandora Ave E, Winnipeg, MB R2C 0B6",
+      "Lat": 49.8944333,
+      "Lon": -96.9914138,
+      "PlaceId": "ChIJK1gr-tR76lIRWbHwSCpCBBA"
+    },
+    "East End 3": {
+      "Address": "517 Pandora Ave E, Winnipeg, MB R2C 0B6",
+      "Lat": 49.8944333,
+      "Lon": -96.9914138,
+      "PlaceId": "ChIJK1gr-tR76lIRWbHwSCpCBBA"
+    },
+    "Gateway Blue": {
+      "Address": "1717 Gateway Rd, Winnipeg, MB R2G 4H1",
+      "Lat": 49.9453812,
+      "Lon": -97.047499,
+      "PlaceId": "ChIJ1aFIxpl66lIRYDOqjVngiE8"
+    },
+    "Gateway Red": {
+      "Address": "1717 Gateway Rd, Winnipeg, MB R2G 4H1",
+      "Lat": 49.9453812,
+      "Lon": -97.047499,
+      "PlaceId": "ChIJ1aFIxpl66lIRYDOqjVngiE8"
+    },
+    "Glenwood C.C.": {
+      "Address": "27 Overton St, Winnipeg, MB R2M 2X8",
+      "Lat": 49.8659196,
+      "Lon": -97.1078463,
+      "PlaceId": "ChIJm9Cd18N26lIRgWX3e1XB7kI"
+    },
+    "Keith Bodley": {
+      "Address": "165 Sansome Ave, Winnipeg, MB R3K 0N8",
+      "Lat": 49.8758992,
+      "Lon": -97.3042385,
+      "PlaceId": "ChIJ33qrsX4M6lIRwrrSeYz8R8A"
+    },
+    "Maginot Arena": {
+      "Address": "910 Maginot St, Winnipeg, MB R2J 0Z6",
+      "Lat": 49.8725,
+      "Lon": -97.0802778,
+      "PlaceId": "ChIJyQ6GGCp36lIRtjaIzbSx1PQ"
+    },
+    "Maples Rec Centre": {
+      "Address": "434 Adsum Dr, Winnipeg, MB R2P 1J1",
+      "Lat": 49.9535982,
+      "Lon": -97.1759862,
+      "PlaceId": "ChIJuasx1gRy6lIRjcIbE7xId9Y"
+    },
+    "Notre Dame": {
+      "Address": "271 De La Cathedrale Ave, Winnipeg, MB R2H 0J1",
+      "Lat": 49.8910645,
+      "Lon": -97.1167293,
+      "PlaceId": "ChIJd-Nt2DZx6lIRJaCCzX-JpkA"
+    },
+    "Oakbank Arena": {
+      "Address": "1016 Almey Ave, Oakbank, MB R0E 1J2",
+      "Lat": 49.9430677,
+      "Lon": -96.8389625,
+      "PlaceId": "ChIJjcG4BJ2H6lIRg8il6xqITLw"
+    },
+    "River Heights": {
+      "Address": "1370 Grosvenor Ave, Winnipeg, MB R3M 0P2",
+      "Lat": 49.8655556,
+      "Lon": -97.1816667,
+      "PlaceId": "ChIJ47anGmx06lIRGygEnhhLHMg"
+    },
+    "Sam Southern": {
+      "Address": "625 Osborne St, Winnipeg, MB R3L 1B4",
+      "Lat": 49.863389,
+      "Lon": -97.1346262,
+      "PlaceId": "ChIJH9SoMqJ26lIRVDzJjyJJc5Y"
+    },
+    "Sargent Park": {
+      "Address": "1111 Wall St, Winnipeg, MB R3E 3G9",
+      "Lat": 49.8992555,
+      "Lon": -97.1815871,
+      "PlaceId": "ChIJrb1aB5Zz6lIRgeJS0e8G7JE"
+    },
+    "Seven Oaks Arena (Blue)": {
+      "Address": "745 Kingsbury Ave, Winnipeg, MB R2V 3H9",
+      "Lat": 49.948204,
+      "Lon": -97.1391296,
+      "PlaceId": "ChIJXXsP5ehx6lIR1oifrJFnHSM"
+    },
+    "Seven Oaks Arena (Red)": {
+      "Address": "745 Kingsbury Ave, Winnipeg, MB R2V 3H9",
+      "Lat": 49.948204,
+      "Lon": -97.1391296,
+      "PlaceId": "ChIJXXsP5ehx6lIR1oifrJFnHSM"
+    },
+    "Wayne Fleming Arena": {
+      "Address": "Max Bell Centre, 109 Sidney Smith St, Winnipeg, MB R3T 2M6",
+      "Lat": 49.8083334,
+      "Lon": -97.1392317,
+      "PlaceId": "ChIJFwgzofp16lIRMAsix049l9w"
+    },
+    "West Kildonan": {
+      "Address": "346 Perth Ave, Winnipeg, MB R2V 0T7",
+      "Lat": 49.9370333,
+      "Lon": -97.1262423,
+      "PlaceId": "ChIJcRSSkbtx6lIR9RMMWpSxhdE"
+    }
   }
 }
