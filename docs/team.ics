@@ -26,14 +26,24 @@ END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
 UID:c17844bdf39b37cd554d@team-ical
-DTSTAMP:20260929T141836Z
+DTSTAMP:20260929T150853Z
 DTSTART;TZID=America/Winnipeg:20261004T211500
 DTEND;TZID=America/Winnipeg:20261004T221500
 SUMMARY:Cobra HC @ 3CP1 H.C.
-LOCATION:Bertrand
-DESCRIPTION:Home: 3CP1 H.C.\nVisitor: Cobra HC\nSchedule: https://sche
- dules.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=TeamS
- ched&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
+LOCATION:Bertrand\, 294 Bertrand St\, Winnipeg\, MB R2H 0S4
+GEO:49.883868;-97.114604
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="294 Bertrand St, Winn
+ ipeg, MB R2H 0S4";X-APPLE-RADIUS=100;X-TITLE="Bertrand":geo:49.883868
+ ,-97.114604
+URL:https://www.google.com/maps/search/?api=1&query=Bertrand%2C%20294%
+ 20Bertrand%20St%2C%20Winnipeg%2C%20MB%20R2H%200S4&query_place_id=ChIJ
+ UcTYnjRx6lIRBTfMViiJ-8Q
+DESCRIPTION:Home: 3CP1 H.C.\nVisitor: Cobra HC\nArena: Bertrand\, 294 
+ Bertrand St\, Winnipeg\, MB R2H 0S4\nMap: https://www.google.com/maps
+ /search/?api=1&query=Bertrand%2C%20294%20Bertrand%20St%2C%20Winnipeg%
+ 2C%20MB%20R2H%200S4&query_place_id=ChIJUcTYnjRx6lIRBTfMViiJ-8Q\nSched
+ ule: https://schedules.winnipegcentralhockey.ca/schedules.cfm?fo=Sche
+ dule&method=TeamSched&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Cobra HC @ 3CP1 H.C.
@@ -47,14 +57,26 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:aba665e624c09114eabb@team-ical
-DTSTAMP:20260929T141836Z
+DTSTAMP:20260929T150853Z
 DTSTART;TZID=America/Winnipeg:20261008T213000
 DTEND;TZID=America/Winnipeg:20261008T223000
 SUMMARY:Cobra HC vs Grinders
-LOCATION:Seven Oaks Arena (Blue)
-DESCRIPTION:Home: Cobra HC\nVisitor: Grinders\nSchedule: https://sched
- ules.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=TeamSc
- hed&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
+LOCATION:Seven Oaks Arena (Blue)\, 745 Kingsbury Ave\, Winnipeg\, MB R
+ 2V 3H9
+GEO:49.948204;-97.13913
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="745 Kingsbury Ave, Wi
+ nnipeg, MB R2V 3H9";X-APPLE-RADIUS=100;X-TITLE="Seven Oaks Arena (Blu
+ e)":geo:49.948204,-97.13913
+URL:https://www.google.com/maps/search/?api=1&query=Seven%20Oaks%20Are
+ na%20%28Blue%29%2C%20745%20Kingsbury%20Ave%2C%20Winnipeg%2C%20MB%20R2
+ V%203H9&query_place_id=ChIJXXsP5ehx6lIR1oifrJFnHSM
+DESCRIPTION:Home: Cobra HC\nVisitor: Grinders\nArena: Seven Oaks Arena
+  (Blue)\, 745 Kingsbury Ave\, Winnipeg\, MB R2V 3H9\nMap: https://www
+ .google.com/maps/search/?api=1&query=Seven%20Oaks%20Arena%20%28Blue%2
+ 9%2C%20745%20Kingsbury%20Ave%2C%20Winnipeg%2C%20MB%20R2V%203H9&query_
+ place_id=ChIJXXsP5ehx6lIR1oifrJFnHSM\nSchedule: https://schedules.win
+ nipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=TeamSched&Sche
+ duleID=223&TeamID=5282&Team=Cobra%20HC
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Cobra HC vs Grinders
@@ -68,14 +90,26 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5428207c1ef44ffb6bb0@team-ical
-DTSTAMP:20260929T141836Z
+DTSTAMP:20260929T150853Z
 DTSTART;TZID=America/Winnipeg:20261015T213000
 DTEND;TZID=America/Winnipeg:20261015T223000
 SUMMARY:Cobra HC vs Quack Addicts
-LOCATION:Seven Oaks Arena (Blue)
-DESCRIPTION:Home: Cobra HC\nVisitor: Quack Addicts\nSchedule: https://
- schedules.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=T
- eamSched&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
+LOCATION:Seven Oaks Arena (Blue)\, 745 Kingsbury Ave\, Winnipeg\, MB R
+ 2V 3H9
+GEO:49.948204;-97.13913
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="745 Kingsbury Ave, Wi
+ nnipeg, MB R2V 3H9";X-APPLE-RADIUS=100;X-TITLE="Seven Oaks Arena (Blu
+ e)":geo:49.948204,-97.13913
+URL:https://www.google.com/maps/search/?api=1&query=Seven%20Oaks%20Are
+ na%20%28Blue%29%2C%20745%20Kingsbury%20Ave%2C%20Winnipeg%2C%20MB%20R2
+ V%203H9&query_place_id=ChIJXXsP5ehx6lIR1oifrJFnHSM
+DESCRIPTION:Home: Cobra HC\nVisitor: Quack Addicts\nArena: Seven Oaks 
+ Arena (Blue)\, 745 Kingsbury Ave\, Winnipeg\, MB R2V 3H9\nMap: https:
+ //www.google.com/maps/search/?api=1&query=Seven%20Oaks%20Arena%20%28B
+ lue%29%2C%20745%20Kingsbury%20Ave%2C%20Winnipeg%2C%20MB%20R2V%203H9&q
+ uery_place_id=ChIJXXsP5ehx6lIR1oifrJFnHSM\nSchedule: https://schedule
+ s.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=TeamSched
+ &ScheduleID=223&TeamID=5282&Team=Cobra%20HC
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Cobra HC vs Quack Addicts
@@ -89,14 +123,26 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f401aee81aad6cbb3d9c@team-ical
-DTSTAMP:20260929T141836Z
+DTSTAMP:20260929T150853Z
 DTSTART;TZID=America/Winnipeg:20261022T213000
 DTEND;TZID=America/Winnipeg:20261022T223000
 SUMMARY:Cobra HC vs Jimmy Rustlers
-LOCATION:Seven Oaks Arena (Blue)
-DESCRIPTION:Home: Cobra HC\nVisitor: Jimmy Rustlers\nSchedule: https:/
- /schedules.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=
- TeamSched&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
+LOCATION:Seven Oaks Arena (Blue)\, 745 Kingsbury Ave\, Winnipeg\, MB R
+ 2V 3H9
+GEO:49.948204;-97.13913
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="745 Kingsbury Ave, Wi
+ nnipeg, MB R2V 3H9";X-APPLE-RADIUS=100;X-TITLE="Seven Oaks Arena (Blu
+ e)":geo:49.948204,-97.13913
+URL:https://www.google.com/maps/search/?api=1&query=Seven%20Oaks%20Are
+ na%20%28Blue%29%2C%20745%20Kingsbury%20Ave%2C%20Winnipeg%2C%20MB%20R2
+ V%203H9&query_place_id=ChIJXXsP5ehx6lIR1oifrJFnHSM
+DESCRIPTION:Home: Cobra HC\nVisitor: Jimmy Rustlers\nArena: Seven Oaks
+  Arena (Blue)\, 745 Kingsbury Ave\, Winnipeg\, MB R2V 3H9\nMap: https
+ ://www.google.com/maps/search/?api=1&query=Seven%20Oaks%20Arena%20%28
+ Blue%29%2C%20745%20Kingsbury%20Ave%2C%20Winnipeg%2C%20MB%20R2V%203H9&
+ query_place_id=ChIJXXsP5ehx6lIR1oifrJFnHSM\nSchedule: https://schedul
+ es.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=TeamSche
+ d&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Cobra HC vs Jimmy Rustlers
@@ -110,14 +156,26 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7afe7ab160b19cca057e@team-ical
-DTSTAMP:20260929T141836Z
+DTSTAMP:20260929T150853Z
 DTSTART;TZID=America/Winnipeg:20261024T203000
 DTEND;TZID=America/Winnipeg:20261024T213000
 SUMMARY:Cobra HC @ Showers and Beers
-LOCATION:Seven Oaks Arena (Blue)
-DESCRIPTION:Home: Showers and Beers\nVisitor: Cobra HC\nSchedule: http
- s://schedules.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&meth
- od=TeamSched&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
+LOCATION:Seven Oaks Arena (Blue)\, 745 Kingsbury Ave\, Winnipeg\, MB R
+ 2V 3H9
+GEO:49.948204;-97.13913
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="745 Kingsbury Ave, Wi
+ nnipeg, MB R2V 3H9";X-APPLE-RADIUS=100;X-TITLE="Seven Oaks Arena (Blu
+ e)":geo:49.948204,-97.13913
+URL:https://www.google.com/maps/search/?api=1&query=Seven%20Oaks%20Are
+ na%20%28Blue%29%2C%20745%20Kingsbury%20Ave%2C%20Winnipeg%2C%20MB%20R2
+ V%203H9&query_place_id=ChIJXXsP5ehx6lIR1oifrJFnHSM
+DESCRIPTION:Home: Showers and Beers\nVisitor: Cobra HC\nArena: Seven O
+ aks Arena (Blue)\, 745 Kingsbury Ave\, Winnipeg\, MB R2V 3H9\nMap: ht
+ tps://www.google.com/maps/search/?api=1&query=Seven%20Oaks%20Arena%20
+ %28Blue%29%2C%20745%20Kingsbury%20Ave%2C%20Winnipeg%2C%20MB%20R2V%203
+ H9&query_place_id=ChIJXXsP5ehx6lIR1oifrJFnHSM\nSchedule: https://sche
+ dules.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=TeamS
+ ched&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Cobra HC @ Showers and Beers
@@ -131,14 +189,25 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:6ab4327bbc6eb0ae457e@team-ical
-DTSTAMP:20260929T141836Z
+DTSTAMP:20260929T150853Z
 DTSTART;TZID=America/Winnipeg:20261027T214500
 DTEND;TZID=America/Winnipeg:20261027T224500
 SUMMARY:Cobra HC @ Lucky Pucks HC
-LOCATION:Dutton Arena
-DESCRIPTION:Home: Lucky Pucks HC\nVisitor: Cobra HC\nSchedule: https:/
- /schedules.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=
- TeamSched&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
+LOCATION:Dutton Arena\, 400 South Dr\, Winnipeg\, MB R3T 0E3
+GEO:49.843784;-97.121694
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="400 South Dr, Winnipe
+ g, MB R3T 0E3";X-APPLE-RADIUS=100;X-TITLE="Dutton Arena":geo:49.84378
+ 4,-97.121694
+URL:https://www.google.com/maps/search/?api=1&query=Dutton%20Arena%2C%
+ 20400%20South%20Dr%2C%20Winnipeg%2C%20MB%20R3T%200E3&query_place_id=C
+ hIJoSCGfYh26lIRwNtsgjh7I2E
+DESCRIPTION:Home: Lucky Pucks HC\nVisitor: Cobra HC\nArena: Dutton Are
+ na\, 400 South Dr\, Winnipeg\, MB R3T 0E3\nMap: https://www.google.co
+ m/maps/search/?api=1&query=Dutton%20Arena%2C%20400%20South%20Dr%2C%20
+ Winnipeg%2C%20MB%20R3T%200E3&query_place_id=ChIJoSCGfYh26lIRwNtsgjh7I
+ 2E\nSchedule: https://schedules.winnipegcentralhockey.ca/schedules.cf
+ m?fo=Schedule&method=TeamSched&ScheduleID=223&TeamID=5282&Team=Cobra%
+ 20HC
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Cobra HC @ Lucky Pucks HC
@@ -152,14 +221,26 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:802bb1b42b0dcb9ad16b@team-ical
-DTSTAMP:20260929T141836Z
+DTSTAMP:20260929T150853Z
 DTSTART;TZID=America/Winnipeg:20261029T213000
 DTEND;TZID=America/Winnipeg:20261029T223000
 SUMMARY:Cobra HC vs North End Hockey Club
-LOCATION:Seven Oaks Arena (Blue)
-DESCRIPTION:Home: Cobra HC\nVisitor: North End Hockey Club\nSchedule: 
- https://schedules.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&
- method=TeamSched&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
+LOCATION:Seven Oaks Arena (Blue)\, 745 Kingsbury Ave\, Winnipeg\, MB R
+ 2V 3H9
+GEO:49.948204;-97.13913
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="745 Kingsbury Ave, Wi
+ nnipeg, MB R2V 3H9";X-APPLE-RADIUS=100;X-TITLE="Seven Oaks Arena (Blu
+ e)":geo:49.948204,-97.13913
+URL:https://www.google.com/maps/search/?api=1&query=Seven%20Oaks%20Are
+ na%20%28Blue%29%2C%20745%20Kingsbury%20Ave%2C%20Winnipeg%2C%20MB%20R2
+ V%203H9&query_place_id=ChIJXXsP5ehx6lIR1oifrJFnHSM
+DESCRIPTION:Home: Cobra HC\nVisitor: North End Hockey Club\nArena: Sev
+ en Oaks Arena (Blue)\, 745 Kingsbury Ave\, Winnipeg\, MB R2V 3H9\nMap
+ : https://www.google.com/maps/search/?api=1&query=Seven%20Oaks%20Aren
+ a%20%28Blue%29%2C%20745%20Kingsbury%20Ave%2C%20Winnipeg%2C%20MB%20R2V
+ %203H9&query_place_id=ChIJXXsP5ehx6lIR1oifrJFnHSM\nSchedule: https://
+ schedules.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=T
+ eamSched&ScheduleID=223&TeamID=5282&Team=Cobra%20HC
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Cobra HC vs North End Hockey Club
