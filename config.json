@@ -1,0 +1,10 @@
+{
+  "ScheduleUrl": "https://schedules.winnipegcentralhockey.ca/schedules.cfm?fo=Schedule&method=TeamSched&ScheduleID=223&TeamID=5282&Team=Cobra%20HC",
+  "TeamName": "",
+  "CalendarName": "",
+  "OutputPath": "docs/team.ics",
+  "GameLengthMinutes": 60,
+  "ReminderMinutes": [120, 60],
+  "ArenaAddresses": {
+  }
+}
