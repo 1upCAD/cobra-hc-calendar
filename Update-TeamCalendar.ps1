@@ -136,28 +136,48 @@ $tables = [regex]::Matches($html, '(?is)<table\b[^>]*>((?:(?!<table\b).)*?)</tab
 
 $games = New-Object System.Collections.Generic.List[object]
 
+# Cell text for a row, with colspan cells repeated so columns line up with the header
+function Get-RowCells([string]$rowHtml) {
+    $out = New-Object System.Collections.Generic.List[string]
+    foreach ($c in [regex]::Matches($rowHtml, '(?is)<t[dh]\b([^>]*)>(.*?)</t[dh]>')) {
+        $span = 1
+        if ($c.Groups[1].Value -match '(?i)colspan\s*=\s*"?(\d+)') { $span = [int]$Matches[1] }
+        $text = Get-CellText $c.Groups[2].Value
+        for ($k = 0; $k -lt $span; $k++) { $out.Add($text) }
+    }
+    return ,$out.ToArray()
+}
+
 foreach ($t in $tables) {
     $rows = [regex]::Matches($t.Groups[1].Value, '(?is)<tr\b[^>]*>(.*?)</tr>')
     $col = $null
     $currentDate = $null
 
     foreach ($r in $rows) {
-        $cells = @([regex]::Matches($r.Groups[1].Value, '(?is)<t[dh]\b[^>]*>(.*?)</t[dh]>') |
-            ForEach-Object { Get-CellText $_.Groups[1].Value })
+        $rowHtml = $r.Groups[1].Value
+        $cells = Get-RowCells $rowHtml
         if ($cells.Count -eq 0) { continue }
 
-        # Look for the header row first
+        # Look for the header row first.
+        # League page: Home / Visitor columns. Team page: Opposition column with "vs" or "at".
         if (-not $col) {
             $lower = @($cells | ForEach-Object { $_.ToLower() })
-            if (($lower -contains 'home') -and (($lower -contains 'visitor') -or ($lower -contains 'away'))) {
+            $leagueLayout = ($lower -contains 'home') -and (($lower -contains 'visitor') -or ($lower -contains 'away'))
+            $teamLayout = ($lower -contains 'opposition') -or ($lower -contains 'opponent')
+            if ($leagueLayout -or $teamLayout) {
                 $col = @{}
                 for ($i = 0; $i -lt $lower.Count; $i++) {
                     switch -Regex ($lower[$i]) {
-                        '^home$'               { $col.Home = $i }
-                        '^(visitor|away)$'     { $col.Visitor = $i }
-                        '^time$'               { $col.Time = $i }
-                        '^(date|day)$'         { $col.Date = $i }
+                        '^home$'                        { $col.Home = $i }
+                        '^(visitor|away)$'              { $col.Visitor = $i }
+                        '^(opposition|opponent)$'       { $col.Opp = $i }
+                        '^time$'                        { $col.Time = $i }
+                        '^date$'                        { $col.Date = $i }
                         '^(arena|rink|location|venue)$' { $col.Arena = $i }
+                        '^result$' {
+                            if (-not $col.ContainsKey('Result')) { $col.Result = $i; $col.ResultEnd = $i }
+                            else { $col.ResultEnd = $i }
+                        }
                         '^score$' {
                             if ($col.ContainsKey('Visitor')) { $col.VScore = $i } else { $col.HScore = $i }
                         }
@@ -167,39 +187,68 @@ foreach ($t in $tables) {
             continue
         }
 
-        $filled = @($cells | Where-Object { $_ -ne '' })
+        $filled = @($cells | Where-Object { $_ -ne '' } | Select-Object -Unique)
         $rowText = $cells -join ' | '
 
-        # Short rows are date headings like "Tuesday, September 29"
+        # Short rows are headings like "Tuesday, September 29" or "Regular Season"
         if ($filled.Count -le 2) {
             $d = Find-Date $rowText
             if ($d) { $currentDate = $d }
             continue
         }
 
-        if ($cells.Count -le [math]::Max($col.Home, $col.Visitor)) { continue }
-
         $date = $null
-        if ($col.ContainsKey('Date')) { $date = Find-Date $cells[$col.Date] }
+        if ($col.ContainsKey('Date') -and $cells.Count -gt $col.Date) { $date = Find-Date $cells[$col.Date] }
         if (-not $date) { $date = Find-Date $rowText }
         if (-not $date) { $date = $currentDate }
 
         $time = $null
-        if ($col.ContainsKey('Time')) { $time = Find-Time $cells[$col.Time] }
+        if ($col.ContainsKey('Time') -and $cells.Count -gt $col.Time) { $time = Find-Time $cells[$col.Time] }
         if (-not $time) { $time = Find-Time $rowText }
 
         if (-not $date -or -not $time) { continue }
 
-        $homeTeam = $cells[$col.Home]
-        $vis = $cells[$col.Visitor]
+        $hs = $null; $vs = $null
+
+        if ($col.ContainsKey('Opp')) {
+            if ($cells.Count -le $col.Opp -or -not $teamName) { continue }
+            $oppText = $cells[$col.Opp]
+            if ($oppText -match '^(?i)(vs\.?|at|@)\s+(.+)$') {
+                $isAwayGame = $Matches[1].ToLower() -ne 'vs' -and $Matches[1].ToLower() -ne 'vs.'
+                $opp = $Matches[2].Trim()
+            } else {
+                $isAwayGame = $false
+                $opp = $oppText.Trim()
+            }
+            if (-not $opp) { continue }
+            if ($isAwayGame) { $homeTeam = $opp; $vis = $teamName } else { $homeTeam = $teamName; $vis = $opp }
+
+            # Result looks like "-" before the game, and something like "W 4-2" after
+            if ($col.ContainsKey('Result')) {
+                $resText = ($cells[$col.Result..([math]::Min($col.ResultEnd, $cells.Count - 1))] | Select-Object -Unique) -join ' '
+                if ($resText -match '(\d+)\s*-\s*(\d+)') {
+                    $a = [int]$Matches[1]; $b = [int]$Matches[2]
+                    # Assume our score first, unless a W/L letter says otherwise
+                    $us = $a; $them = $b
+                    if ($resText -match '(?i)\bW\b' -and $us -lt $them) { $us = $b; $them = $a }
+                    if ($resText -match '(?i)\bL\b' -and $us -gt $them) { $us = $b; $them = $a }
+                    if ($isAwayGame) { $hs = $them; $vs = $us } else { $hs = $us; $vs = $them }
+                }
+            }
+        } else {
+            if ($cells.Count -le [math]::Max($col.Home, $col.Visitor)) { continue }
+            $homeTeam = $cells[$col.Home]
+            $vis = $cells[$col.Visitor]
+            if ($col.ContainsKey('HScore') -and $cells[$col.HScore] -match '^\d+$') { $hs = [int]$cells[$col.HScore] }
+            if ($col.ContainsKey('VScore') -and $cells[$col.VScore] -match '^\d+$') { $vs = [int]$cells[$col.VScore] }
+        }
         if (-not $homeTeam -or -not $vis) { continue }
 
         $arena = ''
         if ($col.ContainsKey('Arena') -and $cells.Count -gt $col.Arena) { $arena = $cells[$col.Arena] }
 
-        $hs = $null; $vs = $null
-        if ($col.ContainsKey('HScore') -and $cells[$col.HScore] -match '^\d+$') { $hs = [int]$cells[$col.HScore] }
-        if ($col.ContainsKey('VScore') -and $cells[$col.VScore] -match '^\d+$') { $vs = [int]$cells[$col.VScore] }
+        $gameId = ''
+        if ($rowHtml -match '(?i)GameID=(\d+)') { $gameId = $Matches[1] }
 
         $games.Add([pscustomobject]@{
             Start   = $date.Add($time)
@@ -208,6 +257,7 @@ foreach ($t in $tables) {
             Arena   = $arena
             HScore  = $hs
             VScore  = $vs
+            GameId  = $gameId
         })
     }
 }
@@ -299,8 +349,8 @@ foreach ($g in $games) {
     }
     $desc += "`nSchedule: $($cfg.ScheduleUrl)"
 
-    # UID ignores the start time so a time change updates the event instead of duplicating it
-    $seed = $g.Start.ToString('yyyyMMdd') + '|' + $g.Home + '|' + $g.Visitor
+    # UID uses the league GameID, or date and teams, so a time change updates the event instead of duplicating it
+    $seed = if ($g.GameId) { 'game|' + $g.GameId } else { $g.Start.ToString('yyyyMMdd') + '|' + $g.Home + '|' + $g.Visitor }
     if ($seen.ContainsKey($seed)) { $seed += '|' + $g.Start.ToString('HHmm') }
     $seen[$seed] = $true
 
