@@ -300,12 +300,20 @@ function Get-Uid([string]$seed) {
     (($bytes[0..9] | ForEach-Object { $_.ToString('x2') }) -join '') + '@team-ical'
 }
 
-# Current time in Winnipeg, used to decide which games are finished
-$tz = $null
-foreach ($id in 'America/Winnipeg', 'Central Standard Time') {
-    try { $tz = [TimeZoneInfo]::FindSystemTimeZoneById($id); break } catch { }
+# Fixed UTC offset for game times. Manitoba stays on -05:00 all year since Nov 2026.
+# Times are written in UTC so calendar apps with old time zone rules still show them right.
+$offsetText = "$($cfg.UtcOffset)".Trim()
+if (-not $offsetText) { $offsetText = '-05:00' }
+if ($offsetText -notmatch '^([+-])(\d{1,2}):?(\d{2})$') { throw "UtcOffset in config.json must look like -05:00, got: $offsetText" }
+$utcOffset = New-TimeSpan -Hours ([int]$Matches[2]) -Minutes ([int]$Matches[3])
+if ($Matches[1] -eq '-') { $utcOffset = $utcOffset.Negate() }
+
+function ConvertTo-IcsUtc([datetime]$local) {
+    $local.Subtract($utcOffset).ToString("yyyyMMdd'T'HHmmss'Z'")
 }
-$nowLocal = if ($tz) { [TimeZoneInfo]::ConvertTimeFromUtc([DateTime]::UtcNow, $tz) } else { Get-Date }
+
+# Current league time, used to decide which games are finished
+$nowLocal = [DateTime]::UtcNow.Add($utcOffset)
 
 $lines = New-Object System.Collections.Generic.List[string]
 $lines.Add('BEGIN:VCALENDAR')
@@ -314,19 +322,8 @@ $lines.Add('PRODID:-//team-ical//Update-TeamCalendar//EN')
 $lines.Add('CALSCALE:GREGORIAN')
 $lines.Add('METHOD:PUBLISH')
 Add-Line $lines ('X-WR-CALNAME:' + (Escape-Ics $calName))
-$lines.Add('X-WR-TIMEZONE:America/Winnipeg')
 $lines.Add('REFRESH-INTERVAL;VALUE=DURATION:PT6H')
 $lines.Add('X-PUBLISHED-TTL:PT6H')
-
-# Central time rules, same as the rest of Manitoba since 2007
-@(
-    'BEGIN:VTIMEZONE', 'TZID:America/Winnipeg',
-    'BEGIN:DAYLIGHT', 'TZOFFSETFROM:-0600', 'TZOFFSETTO:-0500', 'TZNAME:CDT',
-    'DTSTART:19700308T020000', 'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU', 'END:DAYLIGHT',
-    'BEGIN:STANDARD', 'TZOFFSETFROM:-0500', 'TZOFFSETTO:-0600', 'TZNAME:CST',
-    'DTSTART:19701101T020000', 'RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU', 'END:STANDARD',
-    'END:VTIMEZONE'
-) | ForEach-Object { $lines.Add($_) }
 
 $stamp = [DateTime]::UtcNow.ToString("yyyyMMdd'T'HHmmss'Z'")
 $seen = @{}
@@ -375,8 +372,8 @@ foreach ($g in $games) {
     $lines.Add('BEGIN:VEVENT')
     $lines.Add('UID:' + (Get-Uid $seed))
     $lines.Add('DTSTAMP:' + $stamp)
-    $lines.Add('DTSTART;TZID=America/Winnipeg:' + $g.Start.ToString("yyyyMMdd'T'HHmmss"))
-    $lines.Add('DTEND;TZID=America/Winnipeg:' + $end.ToString("yyyyMMdd'T'HHmmss"))
+    $lines.Add('DTSTART:' + (ConvertTo-IcsUtc $g.Start))
+    $lines.Add('DTEND:' + (ConvertTo-IcsUtc $end))
     Add-Line $lines ('SUMMARY:' + (Escape-Ics $summary))
     if ($location) { Add-Line $lines ('LOCATION:' + (Escape-Ics $location)) }
     if ($arena -and $null -ne $arena.Lat -and $null -ne $arena.Lon) {

@@ -18,6 +18,7 @@ subscribe to with `webcal://`. Games update in your calendar when the league cha
 | CalendarName | Name shown in the calendar app. Blank = team name (Cobra HC) |
 | OutputPath | Where the .ics is written |
 | GameLengthMinutes | Event length (60) |
+| UtcOffset | League time zone offset. Manitoba is `-05:00` all year since Nov 2026 |
 | ReminderMinutes | Alerts before each game, e.g. `[120, 60]`. `[]` for none |
 | ArenaAddresses | Arena name (as the league spells it) to address, map pin and Google place ID |
 
@@ -80,4 +81,5 @@ Set `OutputPath` to a folder your web server serves, then subscribe with
 - If the page can't be read or no games are found, the old .ics is left alone.
 - Event IDs are based on date and teams, so a time or rink change updates the existing event.
 - Finished games show the result in the title, e.g. `Cobra HC vs Hotwings (W 4-2)`.
+- Game times are written in UTC using `UtcOffset`, so they show correctly even on devices with old Manitoba time zone rules.
 - Google Calendar only refreshes subscribed feeds every 12 to 24 hours. Apple and Outlook are faster.

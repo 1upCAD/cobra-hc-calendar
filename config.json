@@ -4,6 +4,7 @@
   "CalendarName": "",
   "OutputPath": "docs/team.ics",
   "GameLengthMinutes": 60,
+  "UtcOffset": "-05:00",
   "ReminderMinutes": [
     120,
     60
