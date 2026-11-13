@@ -63,14 +63,40 @@ if ($cfg.ArenaAddresses) {
 
 # ---------- download ----------
 
+# Warning that also shows on the GitHub run summary
+function Write-RunWarning([string]$msg) {
+    Write-Warning $msg
+    if ($env:GITHUB_ACTIONS) { Write-Host "::warning::$msg" }
+}
+
+# The league site sometimes errors or times out for a few minutes.
+# Retry, and if it is still down, keep the current calendar and wait for the next run.
+function Get-SchedulePage([string]$url) {
+    $waits = @(30, 60, 120)
+    for ($try = 1; $try -le $waits.Count + 1; $try++) {
+        try {
+            $resp = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 60 `
+                -UserAgent 'Mozilla/5.0 (team calendar sync)'
+            return $resp.Content
+        } catch {
+            Write-Host "Download attempt $try failed: $($_.Exception.Message)"
+            if ($try -le $waits.Count) { Start-Sleep -Seconds $waits[$try - 1] }
+        }
+    }
+    return $null
+}
+
 if ($HtmlFile) {
     $html = Get-Content -Raw -Path $HtmlFile
 } else {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    $resp = Invoke-WebRequest -Uri $cfg.ScheduleUrl -UseBasicParsing -TimeoutSec 60 `
-        -UserAgent 'Mozilla/5.0 (team calendar sync)'
-    $html = $resp.Content
+    $html = Get-SchedulePage $cfg.ScheduleUrl
+    if (-not $html) {
+        Write-RunWarning 'League site could not be reached. Calendar left as is, will try again next run.'
+        exit 0
+    }
 }
+$rawHtml = $html
 
 # ---------- helpers ----------
 
@@ -268,9 +294,15 @@ foreach ($t in $tables) {
 }
 
 if ($games.Count -eq 0) {
-    # Leave the old calendar alone if the page failed or the layout changed
-    Write-Warning 'No games found on the page. The .ics was not changed.'
-    exit 1
+    # Leave the old calendar alone either way.
+    # A real schedule page with no games means the layout changed, so fail and send an email.
+    # Anything else is an error or maintenance page from the site, so just wait for the next run.
+    if ($rawHtml -match '(?i)Schedule for' -and $rawHtml -match '(?i)>\s*(<[^>]+>\s*)*(Arena|Rink|Location)\s*<') {
+        Write-RunWarning 'Schedule page loaded but no games were found. The page layout may have changed. Calendar left as is.'
+        exit 1
+    }
+    Write-RunWarning 'League site returned a page without a schedule (error or maintenance). Calendar left as is, will try again next run.'
+    exit 0
 }
 
 $games = @($games | Sort-Object Start)
